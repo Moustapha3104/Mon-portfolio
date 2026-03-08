@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Moustapha Ba | Portfolio</title>
+    <meta name="description" content="Portfolio de Mohamed Moustapha Ba">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bistri: "#3D2B1F",
+                        almond: "#E0D3C2",
+                        almondLight: "#F0E8DC",
+                        almondDark: "#C8B8A2",
+                        accent: "#8B6E52",
+                        accentGold: "#C4965A",
+                        dark: "#1a1210",
+                    },
+                    fontFamily: {
+                        'sans': ['DM Sans', 'sans-serif'],
+                        'serif': ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #E0D3C2;
+        }
+
+        .gradient-hero {
+            background: linear-gradient(135deg, #3D2B1F 0%, #5C3D2A 50%, #3D2B1F 100%);
+        }
+
+        .grain-overlay::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(61, 43, 31, 0.18);
+        }
+
+        .skill-bar {
+            transition: width 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #3D2B1F;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeup {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .section-line::before {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 2px;
+            background: #C4965A;
+            margin: 0 auto 16px;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-bistri bg-almond min-h-screen grain-overlay">
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-50 transition-all duration-300" id="header">
+        <nav class="container mx-auto px-8 py-5">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="text-2xl font-serif font-semibold text-bistri tracking-wide">Mouhamed Moustapha
+                    Ba</a>
+                <ul id="nav-menu" class="hidden md:flex space-x-10"></ul>
+                <button id="mobile-menu-btn" class="md:hidden text-bistri">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden mt-6 pb-4 border-t border-almondDark pt-4 space-y-4"></div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-hero text-almond min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-8 py-24">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="md:w-1/2">
+                    <p class="text-accentGold font-sans text-sm uppercase tracking-[0.3em] mb-6 animate-fadeup">Designer
+                        Digital & Développeur</p>
+                    <h1 id="hero-title"
+                        class="text-5xl md:text-6xl lg:text-7xl font-serif font-light leading-tight mb-8 animate-fadeup delay-1">
+                        Créer des expériences<br>numériques <em>uniques</em>
+                    </h1>
+                    <p id="hero-subtitle"
+                        class="text-almond/70 text-lg mb-10 leading-relaxed max-w-lg animate-fadeup delay-2">Portfolio
+                        de Mouhamed Moustapha Ba</p>
+                    <div class="flex flex-wrap gap-4 animate-fadeup delay-3">
+                        <a href="#projects"
+                            class="bg-accentGold text-bistri px-8 py-3.5 rounded-full font-medium hover:bg-almond transition-all duration-300">Voir
+                            mes projets</a>
+                        <a href="#contact"
+                            class="border border-almond/40 text-almond px-8 py-3.5 rounded-full font-medium hover:border-almond hover:bg-almond/10 transition-all duration-300">Me
+                            contacter</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden shadow-2xl rotate-3">
+                            <img id="hero-image" src="./profile.jpeg" alt=""
+                                class="w-full h-full object-cover -rotate-3 scale-110" loading="lazy">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 bg-accentGold text-bistri p-5 rounded-xl shadow-xl">
+                            <div id="hero-years" class="text-3xl font-serif font-bold">5+</div>
+                            <div class="text-xs font-medium uppercase tracking-wider">Années d'expérience</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-almondLight">
+        <div class="container mx-auto px-8">
+            <div class="text-center mb-16 section-line">
+                <h2 class="text-4xl font-serif font-light mb-4">À propos</h2>
+                <p class="text-bistri/60 max-w-2xl mx-auto">Passionné par la création d'expériences numériques à la fois
+                    belles
+                    et fonctionnelles</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p id="about-text1" class="text-lg mb-6 text-bistri/80 leading-relaxed"></p>
+                    <p id="about-text2" class="text-lg mb-10 text-bistri/80 leading-relaxed"></p>
+                    <div id="skills-container" class="space-y-5"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
+                        <div class="text-accentGold text-3xl mb-4"><i class="fas fa-palette"></i></div>
+                        <h3 class="font-serif text-xl font-semibold mb-2">UI/UX Design</h3>
+                        <p class="text-bistri/60 text-sm leading-relaxed">Creating intuitive and engaging user
+                            interfaces</p>
+                    </div>
+                    <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
+                        <div class="text-accent text-3xl mb-4"><i class="fas fa-code"></i></div>
+                        <h3 class="font-serif text-xl font-semibold mb-2">Dév Frontend</h3>
+                        <p class="text-bistri/60 text-sm leading-relaxed">Créer des sites réactifs et performants</p>
+                    </div>
+                    <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
+                        <div class="text-accentGold text-3xl mb-4"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="font-serif text-xl font-semibold mb-2">Design Réactif</h3>
+                        <p class="text-bistri/60 text-sm leading-relaxed">Optimisé pour tous les appareils et tailles
+                            d'écran</p>
+                    </div>
+                    <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
+                        <div class="text-accent text-3xl mb-4"><i class="fas fa-rocket"></i></div>
+                        <h3 class="font-serif text-xl font-semibold mb-2">Performance</h3>
+                        <p class="text-bistri/60 text-sm leading-relaxed">Fast loading and optimized experiences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-almond">
+        <div class="container mx-auto px-8">
+            <div class="text-center mb-16 section-line">
+                <h2 class="text-4xl font-serif font-light mb-4">Featured Projects</h2>
+                <p class="text-bistri/60 max-w-2xl mx-auto">Une sélection de mes travaux récents dans différents secteurs et sur diverses plateformes</p>
+            </div>
+            <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- témoignages -->
+    <section id="témoignages" class="py-24 bg-almondLight">
+        <div class="container mx-auto px-8">
+            <div class="text-center mb-16 section-line">
+                <h2 class="text-4xl font-serif font-light mb-4">Témoignages</h2>
+                <p class="text-bistri/60 max-w-2xl mx-auto">Ce que mes clients disent de notre collaboration</p>
+            </div>
+            <div id="témoignages-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 gradient-hero text-almond">
+        <div class="container mx-auto px-8">
+            <div class="text-center mb-16">
+                <p class="text-accentGold text-sm uppercase tracking-[0.3em] mb-4">Contactez-moi</p>
+                <h2 class="text-4xl font-serif font-light mb-4">Travaillons ensemble</h2>
+                <p class="text-almond/70 max-w-2xl mx-auto">Vous avez un projet en tête ? J'aimerais en savoir plus</p>
+            </div>
+            <div class="max-w-2xl mx-auto">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-2 text-sm text-almond/80 tracking-wide">Your Name</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-3.5 rounded-xl bg-almond/10 border border-almond/20 text-almond placeholder-almond/30 focus:outline-none focus:border-accentGold transition"
+                                placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm text-almond/80 tracking-wide">Email Address</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-3.5 rounded-xl bg-almond/10 border border-almond/20 text-almond placeholder-almond/30 focus:outline-none focus:border-accentGold transition"
+                                placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm text-almond/80 tracking-wide">Subject</label>
+                        <input type="text" id="subject"
+                            class="w-full px-4 py-3.5 rounded-xl bg-almond/10 border border-almond/20 text-almond placeholder-almond/30 focus:outline-none focus:border-accentGold transition"
+                            placeholder="Project Inquiry" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm text-almond/80 tracking-wide">Message</label>
+                        <textarea id="message" rows="5"
+                            class="w-full px-4 py-3.5 rounded-xl bg-almond/10 border border-almond/20 text-almond placeholder-almond/30 focus:outline-none focus:border-accentGold transition resize-none"
+                            placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-accentGold text-bistri py-4 rounded-full font-semibold hover:bg-almond transition-all duration-300 tracking-wide">Send
+                        Message</button>
+                </form>
+                <div id="form-success"
+                    class="hidden mt-6 p-4 bg-accentGold/20 border border-accentGold/40 rounded-xl text-center text-almond">
+                    <i class="fas fa-check-circle text-accentGold mr-2"></i>Message sent successfully!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-almond/70 py-14">
+        <div class="container mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div>
+                    <div class="text-2xl font-serif font-semibold text-almond mb-3">Mouhamed Moustapha Ba</div>
+                    <p class="text-almond/50 text-sm">Créer des expériences numériques qui font la différence</p>
+                </div>
+                <div>
+                    <div class="flex space-x-6 mb-5 justify-center">
+                        <a href="#" class="hover:text-accentGold transition text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-accentGold transition text-xl"><i class="fab fa-github"></i></a>
+                        <a href="#" class="hover:text-accentGold transition text-xl"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" class="hover:text-accentGold transition text-xl"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div id="footer-links" class="flex flex-wrap gap-6 justify-center text-sm"></div>
+                </div>
+                <div class="text-center md:text-right">
+                    <div class="text-almond/50 text-sm mb-2">Get in touch</div>
+                    <a id="footer-email" href="mailto:mouhamed@example.com"
+                        class="text-almond hover:text-accentGold transition">mouhamed@example.com</a>
+                </div>
+            </div>
+            <div class="border-t border-almond/10 mt-10 pt-8 text-center text-almond/30 text-sm">
+                <p>© 2026 Mouhamed Moustapha Ba. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ──────────────────────────────────────────────
+        // DATA — fetched from backend (fallback inclus)
+        // ──────────────────────────────────────────────
+        const API_BASE = 'http://localhost:3001/api';
+
+        async function fetchData(endpoint, fallback) {
+            try {
+                const res = await fetch(`${API_BASE}/${endpoint}`);
+                if (!res.ok) throw new Error();
+                return await res.json();
+            } catch {
+                return fallback;
+            }
+        }
+
+        const defaultData = {
+            hero: {
+                title: "Créer des expériences<br>numériques <em>uniques</em>",
+                subtitle: "Portfolio de Mouhamed Moustapha Ba",
+                years: "5+",
+                image: "./profile.jpeg"
+            },
+            about: {
+                text1: "Je suis Mouhamed Moustapha Ba, designer digital et développeur frontend avec plus de 5 ans d'expérience dans la création de sites web et d'applications pour des clients du monde entier. Mon approche combine design esthétique et excellence technique.",
+                text2: "Je crois en la création de solutions qui ne sont pas seulement belles, mais qui résolvent aussi de vrais problèmes commerciaux et apportent de la valeur aux utilisateurs."
+            },
+            nav: [
+                { label: "Accueil", href: "#home" },
+                { label: "À propos", href: "#about" },
+                { label: "Projets", href: "#projects" },
+                { label: "Témoignages", href: "#testimonials" },
+                { label: "Contact", href: "#contact" }
+            ],
+            skills: [
+                { name: "HTML/CSS", level: 98 },
+                { name: "JavaScript", level: 90 },
+                { name: "React", level: 85 },
+                { name: "Node.js", level: 92 },
+                { name: "Design Réactif", level: 96 }
+            ],
+            projects: [
+                { title: "Plateforme E-commerce", category: "Web Design & Développement", image: "https://picsum.photos/600/400?random=201", alt: "E-commerce", description: "Une plateforme e-commerce entièrement réactive avec un panier personnalisé et une intégration de paiement." },
+                { title: "App Santé & Bien-être", category: "UI/UX App Mobile", image: "https://picsum.photos/600/400?random=202", alt: "App Santé", description: "Design centré sur l'utilisateur pour une application de suivi de santé avec un tableau de bord intuitif." },
+                { title: "Site Web d'Entreprise", category: "Refonte de Site Web", image: "https://picsum.photos/600/400?random=203", alt: "Site Entreprise", description: "Refonte complète d'un site web d'entreprise axée sur l'identité de marque et l'expérience utilisateur." },
+                { title: "Blog de Voyage", category: "Développement Web", image: "https://picsum.photos/600/400?random=204", alt: "Blog Voyage", description: "CMS personnalisé et design réactif pour un blog de photographie de voyage avec galerie." },
+                { title: "Tableau de Bord SaaS", category: "Design UI", image: "https://picsum.photos/600/400?random=205", alt: "SaaS", description: "Design de tableau de bord complexe avec des composants de visualisation de données." },
+                { title: "Site Portfolio", category: "Web Design", image: "https://picsum.photos/600/400?random=206", alt: "Portfolio", description: "Design de portfolio minimaliste axé sur la présentation efficace du travail créatif." }
+            ],
+            testimonials: [
+                { name: "Sarah Johnson", role: "Directrice Marketing, TechCorp", content: "Mouhamed a complètement transformé notre site web. Le nouveau design a augmenté notre taux de conversion de 40% et l'engagement n'a jamais été aussi haut.", image: "https://picsum.photos/100?random=301" },
+                { name: "Michael Chen", role: "CEO, StartupXYZ", content: "Travailler avec Mouhamed a changé la donne pour notre produit. Son attention aux détails et son expertise technique ont dépassé nos attentes.", image: "https://picsum.photos/100?random=302" },
+                { name: "Emma Rodriguez", role: "Directrice Créative, DesignStudio", content: "La capacité de Mouhamed à comprendre des exigences complexes et à les traduire en designs magnifiques et fonctionnels est exceptionnelle. Hautement recommandé !", image: "https://picsum.photos/100?random=303" }
+            ],
+            footerLinks: [
+                { label: "Politique de confidentialité", href: "#privacy" },
+                { label: "Conditions d'utilisation", href: "#terms" },
+                { label: "Politique de cookies", href: "#cookies" }
+            ]
+        };
+
+        // ── Render Functions ──
+        function renderNav(items) {
+            return items.map(i => `<li><a href="${i.href}" class="nav-link text-bistri/80 hover:text-bistri font-medium text-sm tracking-wide transition">${i.label}</a></li>`).join('');
+        }
+        function renderNavMobile(items) {
+            return items.map(i => `<li><a href="${i.href}" class="block text-bistri/80 hover:text-bistri font-medium py-1">${i.label}</a></li>`).join('');
+        }
+        function renderSkills(items) {
+            return items.map(s => `
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-bistri">${s.name}</span>
+                        <span class="text-accentGold text-sm font-semibold">${s.level}%</span>
+                    </div>
+                    <div class="h-1.5 bg-almondDark/40 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-accent to-accentGold rounded-full" style="width:0%" data-width="${s.level}"></div>
+                    </div>
+                </div>`).join('');
+        }
+        function renderProjects(items) {
+            return items.map(p => `
+                <div class="bg-almondLight rounded-2xl overflow-hidden shadow-md card-hover border border-almondDark/20">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="${p.image}" alt="${p.alt}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-bistri text-almond text-xs px-3 py-1.5 rounded-full">${p.category}</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-xl font-semibold mb-2 text-bistri">${p.title}</h3>
+                        <p class="text-bistri/60 text-sm leading-relaxed mb-4">${p.description}</p>
+                        <a href="${p.link || '#'}" class="text-accentGold text-sm font-medium hover:text-accent transition">Voir le projet →</a>
+                    </div>
+                </div>`).join('');
+        }
+        function renderTestimonials(items) {
+            return items.map(t => `
+                <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
+                    <div class="flex items-center mb-5">
+                        <img src="${t.image}" alt="${t.name}" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-almondDark/30" loading="lazy">
+                        <div>
+                            <div class="font-semibold text-bistri">${t.name}</div>
+                            <div class="text-bistri/50 text-xs">${t.role}</div>
+                        </div>
+                    </div>
+                    <p class="text-bistri/70 italic text-sm leading-relaxed">"${t.content}"</p>
+                    <div class="mt-4 text-accentGold text-xs space-x-0.5">
+                        ${'<i class="fas fa-star"></i>'.repeat(5)}
+                    </div>
+                </div>`).join('');
+        }
+        function renderFooterLinks(items) {
+            return items.map(l => `<a href="${l.href}" class="text-almond/40 hover:text-almond/80 transition text-sm">${l.label}</a>`).join('');
+        }
+
+        // ── Init ──
+        async function init() {
+            const [hero, about, nav, skills, projects, testimonials, footerLinks] = await Promise.all([
+                fetchData('hero', defaultData.hero),
+                fetchData('about', defaultData.about),
+                fetchData('nav', defaultData.nav),
+                fetchData('skills', defaultData.skills),
+                fetchData('projects', defaultData.projects),
+                fetchData('testimonials', defaultData.testimonials),
+                fetchData('footer-links', defaultData.footerLinks)
+            ]);
+
+            // Hero
+            document.getElementById('hero-title').innerHTML = hero.title;
+            document.getElementById('hero-subtitle').textContent = hero.subtitle;
+            document.getElementById('hero-years').textContent = hero.years;
+            document.getElementById('hero-image').src = hero.image;
+
+            // About
+            document.getElementById('about-text1').textContent = about.text1;
+            document.getElementById('about-text2').textContent = about.text2;
+
+            // Nav
+            document.getElementById('nav-menu').innerHTML = renderNav(nav);
+            document.getElementById('mobile-menu').innerHTML = renderNavMobile(nav);
+
+            // Skills
+            document.getElementById('skills-container').innerHTML = renderSkills(skills);
+            setTimeout(() => {
+                document.querySelectorAll('.skill-bar').forEach(b => b.style.width = b.dataset.width + '%');
+            }, 600);
+
+            // Projects
+            document.getElementById('projects-grid').innerHTML = renderProjects(projects);
+
+            // Testimonials
+            document.getElementById('testimonials-container').innerHTML = renderTestimonials(testimonials);
+
+            // Footer
+            document.getElementById('footer-links').innerHTML = renderFooterLinks(footerLinks);
+        }
+
+        // ── Header scroll effect ──
+        window.addEventListener('scroll', () => {
+            const h = document.getElementById('header');
+            if (window.scrollY > 40) {
+                h.classList.add('bg-almond/95', 'backdrop-blur-sm', 'shadow-sm');
+            } else {
+                h.classList.remove('bg-almond/95', 'backdrop-blur-sm', 'shadow-sm');
+            }
+        });
+
+        // ── Mobile menu ──
+        document.getElementById('mobile-menu-btn').addEventListener('click', function () {
+            const m = document.getElementById('mobile-menu');
+            m.classList.toggle('hidden');
+            const i = this.querySelector('i');
+            i.className = m.classList.contains('hidden') ? 'fas fa-bars text-xl' : 'fas fa-times text-xl';
+        });
+
+        // ── Contact form ──
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                date: new Date().toISOString()
+            };
+            try {
+                await fetch(`${API_BASE}/messages`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch { }
+            this.reset();
+            document.getElementById('form-success').classList.remove('hidden');
+            setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 4000);
+        });
+
+        // ── Smooth scroll ──
+        document.addEventListener('click', function (e) {
+            const link = e.target.closest("a[href^='#']");
+            if (!link) return;
+            const href = link.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                document.getElementById('mobile-menu').classList.add('hidden');
+                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            }
+        });
+
+        init();
+    </script>
+</body>
+
+</html>

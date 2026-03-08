@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Portfolio de Mouhamed Moustapha Ba</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bistri: "#3D2B1F",
+                        almond: "#E0D3C2",
+                        almondLight: "#F0E8DC",
+                        almondDark: "#C8B8A2",
+                        accent: "#8B6E52",
+                        accentGold: "#C4965A",
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: #F0E8DC;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s;
+        }
+
+        .sidebar-link.active,
+        .sidebar-link:hover {
+            background: rgba(61, 43, 31, 0.08);
+            color: #3D2B1F;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        input,
+        textarea,
+        select {
+            background: white;
+            border: 1px solid #C8B8A2;
+            border-radius: 0.75rem;
+            padding: 0.6rem 1rem;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            color: #3D2B1F;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #C4965A;
+        }
+
+        .btn-primary {
+            background: #3D2B1F;
+            color: #E0D3C2;
+            border-radius: 999px;
+            padding: 0.55rem 1.4rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #5C3D2A;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            border-radius: 999px;
+            padding: 0.45rem 1rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-secondary {
+            background: #E0D3C2;
+            color: #3D2B1F;
+            border: 1px solid #C8B8A2;
+            border-radius: 999px;
+            padding: 0.45rem 1rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #C8B8A2;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1px solid #E0D3C2;
+        }
+
+        .stat-card {
+            background: #3D2B1F;
+            color: #E0D3C2;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+        }
+
+        .tag {
+            background: #E0D3C2;
+            color: #3D2B1F;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(61, 43, 31, 0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #3D2B1F;
+            color: #E0D3C2;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 200;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Side Panel */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            background: white;
+            box-shadow: -10px 0 30px rgba(61, 43, 31, 0.1);
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-panel.open {
+            right: 0;
+        }
+
+        .side-panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(61, 43, 31, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 140;
+            backdrop-filter: blur(2px);
+        }
+
+        .side-panel-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-bistri min-h-screen">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center">
+        <div class="card w-full max-w-md mx-4">
+            <div class="text-center mb-8">
+                <div class="text-3xl font-serif font-semibold text-bistri mb-1">Admin Panel</div>
+                <div class="text-accent text-sm">Portfolio de Mohamed Moustapha Ba</div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Nom d'utilisateur</label>
+                    <input type="text" id="login-user" placeholder="admin" value="admin">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Mot de passe</label>
+                    <input type="password" id="login-pass" placeholder="••••••" value="admin123">
+                </div>
+                <div id="login-error" class="hidden text-red-500 text-sm text-center"></div>
+                <button onclick="doLogin()" class="btn-primary w-full mt-2 py-3">Se connecter</button>
+            </div>
+            <p class="text-center text-bistri/40 text-xs mt-6">Default: admin / admin123</p>
+        </div>
+    </div>
+
+    <!-- Admin App -->
+    <div id="admin-app" class="hidden flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-bistri text-almond flex-shrink-0 flex flex-col min-h-screen">
+            <div class="p-6 border-b border-almond/10">
+                <div class="text-xl font-serif font-semibold">Mohamed Moustapha Ba</div>
+                <div class="text-almond/50 text-xs mt-1">Portfolio Admin</div>
+            </div>
+            <nav class="flex-1 p-4 space-y-1">
+                <button onclick="showTab('dashboard')"
+                    class="sidebar-link active w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-home w-4"></i> Tableau de bord
+                </button>
+                <button onclick="showTab('hero')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-star w-4"></i> Section Accueil
+                </button>
+                <button onclick="showTab('about')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-user w-4"></i> À propos
+                </button>
+                <button onclick="showTab('skills')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-chart-bar w-4"></i> Compétences
+                </button>
+                <button onclick="showTab('projects')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-briefcase w-4"></i> Projets
+                </button>
+                <button onclick="showTab('testimonials')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-quote-right w-4"></i> Témoignages
+                </button>
+                <button onclick="showTab('messages')"
+                    class="sidebar-link w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/80">
+                    <i class="fas fa-envelope w-4"></i> Messages
+                    <span id="msg-badge"
+                        class="ml-auto bg-accentGold text-bistri text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+                </button>
+            </nav>
+            <div class="p-4 border-t border-almond/10">
+                <button onclick="doLogout()"
+                    class="w-full text-left px-4 py-2.5 rounded-xl text-sm flex items-center gap-3 text-almond/50 hover:text-almond transition">
+                    <i class="fas fa-sign-out-alt w-4"></i> Déconnexion
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto">
+            <header
+                class="bg-white/80 backdrop-blur border-b border-almondDark/20 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+                <h1 id="page-title" class="text-xl font-serif font-semibold text-bistri">Tableau de bord</h1>
+                <div class="flex items-center gap-3">
+                    <a href="index.html" target="_blank"
+                        class="text-sm text-bistri/50 hover:text-bistri transition flex items-center gap-1.5">
+                        <i class="fas fa-external-link-alt text-xs"></i> Voir le site
+                    </a>
+                </div>
+            </header>
+
+            <div class="p-8">
+
+                <!-- DASHBOARD -->
+                <div id="tab-dashboard" class="tab-panel active">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <div class="stat-card">
+                            <div class="text-almond/60 text-xs uppercase tracking-wider mb-2">Projets</div>
+                            <div id="stat-projects" class="text-3xl font-serif font-semibold">—</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="text-almond/60 text-xs uppercase tracking-wider mb-2">Compétences</div>
+                            <div id="stat-skills" class="text-3xl font-serif font-semibold">—</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="text-almond/60 text-xs uppercase tracking-wider mb-2">Témoignages</div>
+                            <div id="stat-testimonials" class="text-3xl font-serif font-semibold">—</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="text-almond/60 text-xs uppercase tracking-wider mb-2">Messages</div>
+                            <div id="stat-messages" class="text-3xl font-serif font-semibold">—</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="font-serif font-semibold text-lg mb-4">Messages récents</h3>
+                        <div id="recent-messages" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- HERO -->
+                <div id="tab-hero" class="tab-panel">
+                    <div class="card max-w-2xl">
+                        <h3 class="font-serif font-semibold text-lg mb-6">Section Accueil</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5 text-bistri/70">Titre (HTML
+                                    autorisé)</label>
+                                <textarea id="hero-title" rows="2"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5 text-bistri/70">Subtitle</label>
+                                <textarea id="hero-subtitle" rows="3"></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Years
+                                        Experience</label>
+                                    <input type="text" id="hero-years" placeholder="5+">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Photo URL</label>
+                                    <input type="url" id="hero-image" placeholder="https://...">
+                                </div>
+                            </div>
+                            <button onclick="saveHero()" class="btn-primary">Enregistrer les modifications</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABOUT -->
+                <div id="tab-about" class="tab-panel">
+                    <div class="card max-w-2xl">
+                        <h3 class="font-serif font-semibold text-lg mb-6">Section À propos</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5 text-bistri/70">Paragraphe 1</label>
+                                <textarea id="about-text1" rows="4"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5 text-bistri/70">Paragraphe 2</label>
+                                <textarea id="about-text2" rows="4"></textarea>
+                            </div>
+                            <button onclick="saveAbout()" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SKILLS -->
+                <div id="tab-skills" class="tab-panel">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-serif font-semibold text-lg">Compétences</h3>
+                        <button onclick="openSkillModal()" class="btn-primary"><i class="fas fa-plus mr-2"></i>Add
+                            Skill</button>
+                    </div>
+                    <div id="skills-list" class="grid md:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- PROJECTS -->
+                <div id="tab-projects" class="tab-panel">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-serif font-semibold text-lg">Projets</h3>
+                        <button onclick="openProjectModal()" class="btn-primary"><i class="fas fa-plus mr-2"></i>Add
+                            Project</button>
+                    </div>
+                    <div id="projects-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+
+                <!-- TESTIMONIALS -->
+                <div id="tab-testimonials" class="tab-panel">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-serif font-semibold text-lg">Témoignages</h3>
+                        <button onclick="openTestimonialModal()" class="btn-primary"><i class="fas fa-plus mr-2"></i>Add
+                            Testimonial</button>
+                    </div>
+                    <div id="testimonials-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+
+                <!-- MESSAGES -->
+                <div id="tab-messages" class="tab-panel">
+                    <h3 class="font-serif font-semibold text-lg mb-6">Messages de contact</h3>
+                    <div id="messages-list" class="space-y-4"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Skill -->
+    <div id="skill-modal" class="modal">
+        <div class="card w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="font-serif font-semibold text-lg">Compétence</h3>
+                <button onclick="closeModal('skill-modal')" class="text-bistri/40 hover:text-bistri"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <input type="hidden" id="skill-edit-index" value="">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Nom de la compétence</label>
+                    <input type="text" id="skill-name" placeholder="e.g. JavaScript">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Niveau (%)</label>
+                    <input type="number" id="skill-level" min="0" max="100" placeholder="85">
+                </div>
+                <button onclick="saveSkill()" class="btn-primary w-full">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Project -->
+    <div id="project-modal" class="modal">
+        <div class="card w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="font-serif font-semibold text-lg">Projet</h3>
+                <button onclick="closeModal('project-modal')" class="text-bistri/40 hover:text-bistri"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <input type="hidden" id="project-edit-index" value="">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Titre</label>
+                    <input type="text" id="project-title" placeholder="My Project">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Catégorie</label>
+                    <input type="text" id="project-category" placeholder="Web Design">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">URL de l'image</label>
+                    <input type="url" id="project-image" placeholder="https://...">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Description</label>
+                    <textarea id="project-description" rows="3" placeholder="Project description..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Project Link</label>
+                    <input type="url" id="project-link" placeholder="https://...">
+                </div>
+                <button onclick="saveProject()" class="btn-primary w-full">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Testimonial -->
+    <div id="testimonial-modal" class="modal">
+        <div class="card w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="font-serif font-semibold text-lg">Témoignage</h3>
+                <button onclick="closeModal('testimonial-modal')" class="text-bistri/40 hover:text-bistri"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <input type="hidden" id="testimonial-edit-index" value="">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Name</label>
+                    <input type="text" id="testimonial-name" placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Role</label>
+                    <input type="text" id="testimonial-role" placeholder="CEO, Company">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Photo URL</label>
+                    <input type="url" id="testimonial-image" placeholder="https://...">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5 text-bistri/70">Testimonial Text</label>
+                    <textarea id="testimonial-content" rows="4" placeholder="What the client said..."></textarea>
+                </div>
+                <button onclick="saveTestimonial()" class="btn-primary w-full">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Panel: Message Detail -->
+    <div id="side-panel-overlay" class="side-panel-overlay" onclick="closeMessagePanel()"></div>
+    <div id="message-panel" class="side-panel">
+        <div class="p-6 border-b border-almondDark/20 flex justify-between items-center bg-almondLight/30">
+            <h3 class="font-serif font-semibold text-xl text-bistri">Détails du message</h3>
+            <button onclick="closeMessagePanel()"
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-bistri/5 text-bistri/40 hover:text-bistri transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-8">
+            <div id="panel-content" class="space-y-8">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+        <div class="p-6 border-t border-almondDark/20 bg-white">
+            <button onclick="deleteCurrentMessage()"
+                class="btn-danger w-full py-3 flex items-center justify-center gap-2">
+                <i class="fas fa-trash-alt text-sm"></i> Supprimer ce message
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const API = 'http://localhost:3001/api';
+
+        // ── Auth ──
+        function doLogin() {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            if (u === 'admin' && p === 'admin123') {
+                localStorage.setItem('admin_auth', '1');
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-app').classList.remove('hidden');
+                document.getElementById('admin-app').classList.add('flex');
+                loadAll();
+            } else {
+                const err = document.getElementById('login-error');
+                err.textContent = 'Invalid credentials';
+                err.classList.remove('hidden');
+            }
+        }
+        function doLogout() {
+            localStorage.removeItem('admin_auth');
+            location.reload();
+        }
+        if (localStorage.getItem('admin_auth')) {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-app').classList.remove('hidden');
+            document.getElementById('admin-app').classList.add('flex');
+            setTimeout(loadAll, 100);
+        }
+
+        // ── Toast ──
+        function toast(msg, ok = true) {
+            const t = document.getElementById('toast');
+            t.textContent = (ok ? '✓ ' : '✗ ') + msg;
+            t.style.background = ok ? '#3D2B1F' : '#dc2626';
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ── Tabs ──
+        function showTab(name) {
+            document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(btn => {
+                if (btn.getAttribute('onclick')?.includes(name)) btn.classList.add('active');
+            });
+            document.getElementById('page-title').textContent = name.charAt(0).toUpperCase() + name.slice(1);
+        }
+
+        // ── API helpers ──
+        async function api(endpoint, method = 'GET', body = null) {
+            const opts = { method, headers: { 'Content-Type': 'application/json' } };
+            if (body) opts.body = JSON.stringify(body);
+            try {
+                const r = await fetch(`${API}/${endpoint}`, opts);
+                return await r.json();
+            } catch { return null; }
+        }
+
+        // ── Local state (fallback when no server) ──
+        let state = {
+            hero: { title: "Crafting <em>beautiful</em><br>digital experiences", subtitle: "Portfolio de Mouhamed Moustapha Ba", years: "5+", image: "./profile.jpg" },
+            about: { text1: "I'm Mouhamed Moustapha Ba...", text2: "I believe in creating solutions..." },
+            skills: [{ name: "UI/UX Design", level: 95 }, { name: "HTML/CSS", level: 98 }, { name: "JavaScript", level: 90 }],
+            projects: [
+                { title: "E-commerce Platform", category: "Web Design", image: "https://picsum.photos/600/400?random=201", description: "A fully responsive e-commerce platform.", link: "#" },
+                { title: "Health App", category: "Mobile UI/UX", image: "https://picsum.photos/600/400?random=202", description: "User-centered health tracking app.", link: "#" }
+            ],
+            testimonials: [
+                { name: "Sarah Johnson", role: "Marketing Director", image: "https://picsum.photos/100?random=301", content: "Mouhamed transformed our website completely." }
+            ],
+            messages: []
+        };
+
+        async function loadAll() {
+            const [hero, about, skills, projects, testimonials, messages] = await Promise.all([
+                api('hero'), api('about'), api('skills'), api('projects'), api('testimonials'), api('messages')
+            ]);
+            if (hero) state.hero = hero;
+            if (about) state.about = about;
+            if (skills) state.skills = skills;
+            if (projects) state.projects = projects;
+            if (testimonials) state.testimonials = testimonials;
+            if (messages) state.messages = messages;
+            renderAll();
+        }
+
+        function renderAll() {
+            // Stats
+            document.getElementById('stat-projects').textContent = state.projects.length;
+            document.getElementById('stat-skills').textContent = state.skills.length;
+            document.getElementById('stat-testimonials').textContent = state.testimonials.length;
+            document.getElementById('stat-messages').textContent = state.messages.length;
+            const badge = document.getElementById('msg-badge');
+            if (state.messages.length > 0) { badge.textContent = state.messages.length; badge.classList.remove('hidden'); }
+
+            // Recent messages
+            document.getElementById('recent-messages').innerHTML = state.messages.slice(-3).reverse().map((m, ri) => {
+                const i = state.messages.length - 1 - ri;
+                return `
+                <div onclick="openMessagePanel(${i})" class="flex items-start gap-4 p-4 bg-almondLight/50 rounded-2xl cursor-pointer hover:bg-almond/30 transition-all border border-transparent hover:border-almondDark/20 group">
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:bg-accentGold transition-colors">
+                        <i class="fas fa-envelope text-accent text-xs group-hover:text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-sm text-bistri">${m.name}</span>
+                            <span class="text-[10px] uppercase tracking-wider text-bistri/40">${m.date ? new Date(m.date).toLocaleDateString('fr') : ''}</span>
+                        </div>
+                        <div class="text-xs text-bistri/60 font-medium truncate mb-1">${m.subject}</div>
+                        <div class="text-xs text-bistri/40 truncate italic">"${m.message}"</div>
+                    </div>
+                </div>`;
+            }).join('') || '<p class="text-bistri/40 text-sm">Pas encore de messages.</p>';
+
+            // Hero form
+            document.getElementById('hero-title').value = state.hero.title || '';
+            document.getElementById('hero-subtitle').value = state.hero.subtitle || '';
+            document.getElementById('hero-years').value = state.hero.years || '';
+            document.getElementById('hero-image').value = state.hero.image || '';
+
+            // About form
+            document.getElementById('about-text1').value = state.about.text1 || '';
+            document.getElementById('about-text2').value = state.about.text2 || '';
+
+            // Skills list
+            document.getElementById('skills-list').innerHTML = state.skills.map((s, i) => `
+        <div class="card flex items-center gap-4">
+            <div class="flex-1">
+                <div class="font-medium text-bistri mb-2">${s.name}</div>
+                <div class="h-1.5 bg-almondDark/30 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-accent to-accentGold rounded-full" style="width:${s.level}%"></div>
+                </div>
+                <div class="text-xs text-accentGold mt-1">${s.level}%</div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="openSkillModal(${i})" class="btn-secondary"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteSkill(${i})" class="btn-danger"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>`).join('');
+
+            // Projects list
+            document.getElementById('projects-list').innerHTML = state.projects.map((p, i) => `
+        <div class="card overflow-hidden p-0">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-36 object-cover">
+            <div class="p-4">
+                <span class="tag">${p.category}</span>
+                <h4 class="font-serif font-semibold mt-2 mb-1">${p.title}</h4>
+                <p class="text-bistri/60 text-xs leading-relaxed mb-4">${p.description}</p>
+                <div class="flex gap-2">
+                    <button onclick="openProjectModal(${i})" class="btn-secondary"><i class="fas fa-edit mr-1"></i>Éditer</button>
+                    <button onclick="deleteProject(${i})" class="btn-danger"><i class="fas fa-trash mr-1"></i>Supprimer</button>
+                </div>
+            </div>
+        </div>`).join('');
+
+            // Testimonials list
+            document.getElementById('testimonials-list').innerHTML = state.testimonials.map((t, i) => `
+        <div class="card">
+            <div class="flex items-center gap-3 mb-3">
+                <img src="${t.image}" alt="${t.name}" class="w-10 h-10 rounded-full object-cover ring-2 ring-almondDark/30">
+                <div>
+                    <div class="font-semibold text-sm">${t.name}</div>
+                    <div class="text-bistri/50 text-xs">${t.role}</div>
+                </div>
+            </div>
+            <p class="text-bistri/70 italic text-sm leading-relaxed mb-4">"${t.content}"</p>
+            <div class="flex gap-2">
+                <button onclick="openTestimonialModal(${i})" class="btn-secondary"><i class="fas fa-edit mr-1"></i>Éditer</button>
+                <button onclick="deleteTestimonial(${i})" class="btn-danger"><i class="fas fa-trash mr-1"></i>Supprimer</button>
+            </div>
+        </div>`).join('');
+
+            // Messages
+            document.getElementById('messages-list').innerHTML = state.messages.length ? state.messages.slice().reverse().map((m, ri) => {
+                const i = state.messages.length - 1 - ri;
+                return `
+        <div class="card hover:border-accent/40 transition-colors">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-almondLight flex items-center justify-center text-accent">
+                        <i class="fas fa-user text-sm"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-bistri">${m.name}</div>
+                        <div class="text-bistri/40 text-[10px] uppercase tracking-wider">${m.date ? new Date(m.date).toLocaleString('fr') : ''}</div>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="openMessagePanel(${i})" class="w-8 h-8 flex items-center justify-center rounded-full bg-almondLight text-accent hover:bg-accent hover:text-white transition"><i class="fas fa-eye text-xs"></i></button>
+                    <button onclick="deleteMessage(${i})" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
+                </div>
+            </div>
+            <div class="font-medium text-sm text-accent mb-2">${m.subject}</div>
+            <p class="text-bistri/70 text-sm leading-relaxed line-clamp-2">${m.message}</p>
+        </div>`;
+            }).join('') : '<p class="text-bistri/40 text-sm">No messages yet.</p>';
+        }
+
+        // ── Save functions ──
+        async function saveHero() {
+            state.hero = {
+                title: document.getElementById('hero-title').value,
+                subtitle: document.getElementById('hero-subtitle').value,
+                years: document.getElementById('hero-years').value,
+                image: document.getElementById('hero-image').value
+            };
+            await api('hero', 'PUT', state.hero);
+            toast('Hero section saved!');
+        }
+
+        async function saveAbout() {
+            state.about = {
+                text1: document.getElementById('about-text1').value,
+                text2: document.getElementById('about-text2').value
+            };
+            await api('about', 'PUT', state.about);
+            toast('About section saved!');
+        }
+
+        // ── Modals ──
+        function openModal(id) { document.getElementById(id).classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+        // Skills
+        function openSkillModal(idx = '') {
+            document.getElementById('skill-edit-index').value = idx;
+            if (idx !== '') {
+                const s = state.skills[idx];
+                document.getElementById('skill-name').value = s.name;
+                document.getElementById('skill-level').value = s.level;
+            } else {
+                document.getElementById('skill-name').value = '';
+                document.getElementById('skill-level').value = '';
+            }
+            openModal('skill-modal');
+        }
+        async function saveSkill() {
+            const idx = document.getElementById('skill-edit-index').value;
+            const s = { name: document.getElementById('skill-name').value, level: parseInt(document.getElementById('skill-level').value) };
+            if (idx !== '') state.skills[idx] = s; else state.skills.push(s);
+            await api('skills', 'PUT', state.skills);
+            closeModal('skill-modal');
+            renderAll();
+            toast('Skill saved!');
+        }
+        async function deleteSkill(i) {
+            if (!confirm('Delete this skill?')) return;
+            state.skills.splice(i, 1);
+            await api('skills', 'PUT', state.skills);
+            renderAll();
+            toast('Skill deleted!');
+        }
+
+        // Projects
+        function openProjectModal(idx = '') {
+            document.getElementById('project-edit-index').value = idx;
+            if (idx !== '') {
+                const p = state.projects[idx];
+                document.getElementById('project-title').value = p.title;
+                document.getElementById('project-category').value = p.category;
+                document.getElementById('project-image').value = p.image;
+                document.getElementById('project-description').value = p.description;
+                document.getElementById('project-link').value = p.link || '';
+            } else {
+                ['project-title', 'project-category', 'project-image', 'project-description', 'project-link'].forEach(id => document.getElementById(id).value = '');
+            }
+            openModal('project-modal');
+        }
+        async function saveProject() {
+            const idx = document.getElementById('project-edit-index').value;
+            const p = {
+                title: document.getElementById('project-title').value,
+                category: document.getElementById('project-category').value,
+                image: document.getElementById('project-image').value,
+                alt: document.getElementById('project-title').value,
+                description: document.getElementById('project-description').value,
+                link: document.getElementById('project-link').value
+            };
+            if (idx !== '') state.projects[idx] = p; else state.projects.push(p);
+            await api('projects', 'PUT', state.projects);
+            closeModal('project-modal');
+            renderAll();
+            toast('Project saved!');
+        }
+        async function deleteProject(i) {
+            if (!confirm('Delete this project?')) return;
+            state.projects.splice(i, 1);
+            await api('projects', 'PUT', state.projects);
+            renderAll();
+            toast('Project deleted!');
+        }
+
+        // Testimonials
+        function openTestimonialModal(idx = '') {
+            document.getElementById('testimonial-edit-index').value = idx;
+            if (idx !== '') {
+                const t = state.testimonials[idx];
+                document.getElementById('testimonial-name').value = t.name;
+                document.getElementById('testimonial-role').value = t.role;
+                document.getElementById('testimonial-image').value = t.image;
+                document.getElementById('testimonial-content').value = t.content;
+            } else {
+                ['testimonial-name', 'testimonial-role', 'testimonial-image', 'testimonial-content'].forEach(id => document.getElementById(id).value = '');
+            }
+            openModal('testimonial-modal');
+        }
+        async function saveTestimonial() {
+            const idx = document.getElementById('testimonial-edit-index').value;
+            const t = {
+                name: document.getElementById('testimonial-name').value,
+                role: document.getElementById('testimonial-role').value,
+                image: document.getElementById('testimonial-image').value,
+                content: document.getElementById('testimonial-content').value
+            };
+            if (idx !== '') state.testimonials[idx] = t; else state.testimonials.push(t);
+            await api('testimonials', 'PUT', state.testimonials);
+            closeModal('testimonial-modal');
+            renderAll();
+            toast('Testimonial saved!');
+        }
+        async function deleteTestimonial(i) {
+            if (!confirm('Delete?')) return;
+            state.testimonials.splice(i, 1);
+            await api('testimonials', 'PUT', state.testimonials);
+            renderAll();
+            toast('Deleted!');
+        }
+
+        function deleteMessage(i) {
+            if (!confirm('Delete this message?')) return;
+            state.messages.splice(i, 1);
+            api('messages', 'PUT', state.messages);
+            renderAll();
+            toast('Message deleted!');
+        }
+
+        // ── Message Panel ──
+        let currentMessageIndex = null;
+
+        function openMessagePanel(idx) {
+            currentMessageIndex = idx;
+            const m = state.messages[idx];
+            const date = m.date ? new Date(m.date).toLocaleString('fr') : 'Date inconnue';
+
+            document.getElementById('panel-content').innerHTML = `
+                <div class="space-y-1">
+                    <div class="text-accentGold text-xs font-medium uppercase tracking-widest">Expéditeur</div>
+                    <div class="text-2xl font-serif font-semibold text-bistri">${m.name}</div>
+                    <div class="text-bistri/60 font-medium">${m.email}</div>
+                </div>
+                
+                <div class="space-y-1">
+                    <div class="text-accentGold text-xs font-medium uppercase tracking-widest">Date & Heure</div>
+                    <div class="text-bistri/80">${date}</div>
+                </div>
+
+                <div class="space-y-1 pt-4 border-t border-almondDark/10">
+                    <div class="text-accentGold text-xs font-medium uppercase tracking-widest">Sujet</div>
+                    <div class="text-xl font-serif font-medium text-bistri">${m.subject}</div>
+                </div>
+
+                <div class="space-y-1 pt-4">
+                    <div class="text-accentGold text-xs font-medium uppercase tracking-widest mb-3">Message</div>
+                    <div class="bg-almondLight/50 p-6 rounded-2xl text-bistri/80 leading-relaxed whitespace-pre-wrap">${m.message}</div>
+                </div>
+            `;
+
+            document.getElementById('message-panel').classList.add('open');
+            document.getElementById('side-panel-overlay').classList.add('show');
+
+            // Mark as read if you want (optional future feature)
+            // m.read = true;
+            // api('messages', 'PUT', state.messages);
+        }
+
+        function closeMessagePanel() {
+            document.getElementById('message-panel').classList.remove('open');
+            document.getElementById('side-panel-overlay').classList.remove('show');
+            currentMessageIndex = null;
+        }
+
+        async function deleteCurrentMessage() {
+            if (currentMessageIndex === null) return;
+            if (!confirm('Voulez-vous vraiment supprimer ce message ?')) return;
+
+            state.messages.splice(currentMessageIndex, 1);
+            await api('messages', 'PUT', state.messages);
+            closeMessagePanel();
+            renderAll();
+            toast('Message supprimé !');
+        }
+
+        // Close modals on backdrop click
+        document.querySelectorAll('.modal').forEach(m => {
+            m.addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+
+</html>
