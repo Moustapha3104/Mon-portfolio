@@ -140,7 +140,7 @@
     <header class="fixed w-full z-50 transition-all duration-300" id="header">
         <nav class="container mx-auto px-8 py-5">
             <div class="flex justify-between items-center">
-                <a href="#home" class="text-2xl font-serif font-semibold text-bistri tracking-wide">Mouhamed Moustapha
+                <a href="#home" class="text-2xl font-serif font-semibold text-bistri tracking-wide">Mohamed Moustapha
                     Ba</a>
                 <ul id="nav-menu" class="hidden md:flex space-x-10"></ul>
                 <button id="mobile-menu-btn" class="md:hidden text-bistri">
@@ -156,15 +156,15 @@
         <div class="container mx-auto px-8 py-24">
             <div class="flex flex-col md:flex-row items-center gap-16">
                 <div class="md:w-1/2">
-                    <p class="text-accentGold font-sans text-sm uppercase tracking-[0.3em] mb-6 animate-fadeup">Designer
-                        Digital & Développeur</p>
+                    <p class="text-accentGold font-sans text-sm uppercase tracking-[0.3em] mb-6 animate-fadeup">
+                Développeur</p>
                     <h1 id="hero-title"
                         class="text-5xl md:text-6xl lg:text-7xl font-serif font-light leading-tight mb-8 animate-fadeup delay-1">
                         Créer des expériences<br>numériques <em>uniques</em>
                     </h1>
                     <p id="hero-subtitle"
                         class="text-almond/70 text-lg mb-10 leading-relaxed max-w-lg animate-fadeup delay-2">Portfolio
-                        de Mouhamed Moustapha Ba</p>
+                        de Mohamed Moustapha Ba</p>
                     <div class="flex flex-wrap gap-4 animate-fadeup delay-3">
                         <a href="#projects"
                             class="bg-accentGold text-bistri px-8 py-3.5 rounded-full font-medium hover:bg-almond transition-all duration-300">Voir
@@ -172,6 +172,10 @@
                         <a href="#contact"
                             class="border border-almond/40 text-almond px-8 py-3.5 rounded-full font-medium hover:border-almond hover:bg-almond/10 transition-all duration-300">Me
                             contacter</a>
+                        <a href="./cv.pdf" download
+                            class="border border-accentGold text-accentGold px-8 py-3.5 rounded-full font-medium hover:bg-accentGold hover:text-bistri transition-all duration-300 flex items-center gap-2">
+                            <i class="fas fa-download"></i> Télécharger mon CV
+                        </a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
@@ -209,8 +213,8 @@
                     <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
                         <div class="text-accentGold text-3xl mb-4"><i class="fas fa-palette"></i></div>
                         <h3 class="font-serif text-xl font-semibold mb-2">UI/UX Design</h3>
-                        <p class="text-bistri/60 text-sm leading-relaxed">Creating intuitive and engaging user
-                            interfaces</p>
+                        <p class="text-bistri/60 text-sm leading-relaxed">Créer des interfaces intuitives et engageantes
+                        </p>
                     </div>
                     <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
                         <div class="text-accent text-3xl mb-4"><i class="fas fa-code"></i></div>
@@ -245,16 +249,7 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section id="testimonials" class="py-24 bg-almondLight">
-        <div class="container mx-auto px-8">
-            <div class="text-center mb-16 section-line">
-                <h2 class="text-4xl font-serif font-light mb-4">Témoignages</h2>
-                <p class="text-bistri/60 max-w-2xl mx-auto">Ce que mes clients disent de notre collaboration</p>
-            </div>
-            <div id="testimonials-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
+
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 gradient-hero text-almond">
@@ -366,7 +361,6 @@
                 { label: "Accueil", href: "#home" },
                 { label: "À propos", href: "#about" },
                 { label: "Projets", href: "#projects" },
-                { label: "Témoignages", href: "#testimonials" },
                 { label: "Contact", href: "#contact" }
             ],
             skills: [
@@ -377,16 +371,9 @@
                 { name: "Design Réactif", level: 96 }
             ],
             projects: [
-                { title: "Plateforme E-commerce", category: "Web Design & Développement", image: "https://picsum.photos/600/400?random=201", alt: "E-commerce", description: "Une plateforme e-commerce entièrement réactive avec un panier personnalisé et une intégration de paiement." },
-                { title: "Site Web d'Entreprise", category: "Refonte de Site Web", image: "https://picsum.photos/600/400?random=203", alt: "Site Entreprise", description: "Refonte complète d'un site web d'entreprise axée sur l'identité de marque et l'expérience utilisateur." },
-                { title: "Blog de Voyage", category: "Développement Web", image: "https://picsum.photos/600/400?random=204", alt: "Blog Voyage", description: "CMS personnalisé et design réactif pour un blog de photographie de voyage avec galerie." },
-                { title: "Tableau de Bord SaaS", category: "Design UI", image: "https://picsum.photos/600/400?random=205", alt: "SaaS", description: "Design de tableau de bord complexe avec des composants de visualisation de données." },
-                { title: "Site Portfolio", category: "Web Design", image: "https://picsum.photos/600/400?random=206", alt: "Portfolio", description: "Design de portfolio minimaliste axé sur la présentation efficace du travail créatif." }
-            ],
-            testimonials: [
-                { name: "Mamadou Coly", role: "Directeur Marketing, TechCorp", content: "Mohamed a complètement transformé notre site web. Le nouveau design a augmenté notre taux de conversion de 40% et l'engagement n'a jamais été aussi haut.", image: "https://picsum.photos/100?random=301" },
-                { name: "Mamadou Diouf", role: "CEO, StartupXYZ", content: "Travailler avec Mohamed a changé la donne pour notre produit. Son attention aux détails et son expertise technique ont dépassé nos attentes.", image: "https://picsum.photos/100?random=302" },
-                { name: "Fatima ", role: "Directrice Créative, DesignStudio", content: "La capacité de Mohamed à comprendre des exigences complexes et à les traduire en designs magnifiques et fonctionnels est exceptionnelle. Hautement recommandé !", image: "https://picsum.photos/100?random=303" }
+                { title: "AFI-Listen", category: "Application Mobile & Dashboard IA", image: "./images/afi-listen.png", alt: "AFI-Listen", description: "Développement d'une application mobile connectée à un dashboard avec IA permettant aux étudiants de faire des signalements.", link: "https://afien.vercel.app/" },
+                { title: "E-Gouv", category: "Application Mobile & Dashboard", image: "./images/egouv.png", alt: "E-Gouv", description: "Développement d'une application mobile connectée à un dashboard permettant de faciliter la gestion des collectivités territoriales.", link: "https://egouv.vercel.app/login" },
+                { title: "Tontine Naatal", category: "Application Web", image: "./images/tontine-naatal.png", alt: "Tontine Naatal", description: "Développement d'une application web de gestion de tontine.", link: "https://tontine-front-ufrdaol3m-moustapha3104s-projects.vercel.app/" }
             ],
             footerLinks: [
                 { label: "Politique de confidentialité", href: "#privacy" },
@@ -430,35 +417,19 @@
                     </div>
                 </div>`).join('');
         }
-        function renderTestimonials(items) {
-            return items.map(t => `
-                <div class="bg-almond p-7 rounded-2xl card-hover border border-almondDark/30">
-                    <div class="flex items-center mb-5">
-                        <img src="${t.image}" alt="${t.name}" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-almondDark/30" loading="lazy">
-                        <div>
-                            <div class="font-semibold text-bistri">${t.name}</div>
-                            <div class="text-bistri/50 text-xs">${t.role}</div>
-                        </div>
-                    </div>
-                    <p class="text-bistri/70 italic text-sm leading-relaxed">"${t.content}"</p>
-                    <div class="mt-4 text-accentGold text-xs space-x-0.5">
-                        ${'<i class="fas fa-star"></i>'.repeat(5)}
-                    </div>
-                </div>`).join('');
-        }
+
         function renderFooterLinks(items) {
             return items.map(l => `<a href="${l.href}" class="text-almond/40 hover:text-almond/80 transition text-sm">${l.label}</a>`).join('');
         }
 
         // ── Init ──
         async function init() {
-            const [hero, about, nav, skills, projects, testimonials, footerLinks] = await Promise.all([
+            const [hero, about, nav, skills, projects, footerLinks] = await Promise.all([
                 fetchData('hero', defaultData.hero),
                 fetchData('about', defaultData.about),
                 fetchData('nav', defaultData.nav),
                 fetchData('skills', defaultData.skills),
                 fetchData('projects', defaultData.projects),
-                fetchData('testimonials', defaultData.testimonials),
                 fetchData('footer-links', defaultData.footerLinks)
             ]);
 
@@ -485,8 +456,7 @@
             // Projects
             document.getElementById('projects-grid').innerHTML = renderProjects(projects);
 
-            // Testimonials
-            document.getElementById('testimonials-container').innerHTML = renderTestimonials(testimonials);
+
 
             // Footer
             document.getElementById('footer-links').innerHTML = renderFooterLinks(footerLinks);
